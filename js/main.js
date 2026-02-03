@@ -336,4 +336,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initResultsTabs();
 
+  // --- Equipment Show More ---
+  function initEquipmentShowMore() {
+    const btn = document.querySelector('.equipment-btn');
+    const container = document.querySelector('.equipment .container-hidden');
+    
+    if (!btn || !container) return;
+
+    btn.addEventListener('click', () => {
+      container.classList.toggle('is-expanded');
+      const isExpanded = container.classList.contains('is-expanded');
+      
+      if (isExpanded) {
+        btn.innerHTML = `Згорнути <i class="icon-namechevron-down"></i>`;
+        const icon = btn.querySelector('i');
+        if (icon) icon.style.transition = 'transform 0.3s ease';
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      } else {
+        btn.innerHTML = `Розгорнути все <i class="icon-namechevron-down"></i>`;
+        const icon = btn.querySelector('i');
+        if (icon) icon.style.transition = 'transform 0.3s ease';
+        if (icon) icon.style.transform = '';
+      }
+    });
+  }
+  
+  initEquipmentShowMore();
+
 });
