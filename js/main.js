@@ -189,9 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroSlider) {
     new Swiper(heroSlider, {
       loop: true,
+      // For centeredSlides + slidesPerView: 'auto', we need explicit loopedSlides.
+      // Since we have few slides (3), we must duplicate them enough to visually fill the edges.
+      loopedSlides: 4, 
       spaceBetween: 16,
       slidesPerView: 'auto',
       centeredSlides: true,
+      observer: true,
+      observeParents: true,
+      watchSlidesProgress: true,
+      centerInsufficientSlides: true, // Helps if logic thinks slides are few
       navigation: {
         nextEl: '.hero__button-next',
         prevEl: '.hero__button-prev',
@@ -202,9 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
           spaceBetween: 24,
         }
       },
-      // Optional: Add autoplay or effective attributes if needed
-      grabCursor: true, // Shows hand cursor
-      touchEventsTarget: 'container', // Allows touch events
+      grabCursor: true, 
+      touchEventsTarget: 'container',
     });
   }
 
@@ -362,5 +368,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   initEquipmentShowMore();
+
+  // --- Footer Language Dropdown ---
+  function initFooterLang() {
+    const langDropdowns = document.querySelectorAll('.lang');
+    
+    langDropdowns.forEach(lang => {
+      const current = lang.querySelector('.lang__current');
+      const items = lang.querySelectorAll('.lang__link');
+
+      if (current) {
+          current.addEventListener('click', (e) => {
+              e.stopPropagation();
+              e.preventDefault(); 
+              lang.classList.toggle('is-active');
+          });
+      }
+
+      items.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault(); // Prevent reload/jump
+          
+          // Update Active State
+          items.forEach(i => i.classList.remove('is-active'));
+          item.classList.add('is-active');
+
+          // Update Button Text (keeping the icon)
+          const text = item.textContent.trim();
+          if (current) {
+             // Preserve icon
+             const icon = current.querySelector('i');
+             current.innerHTML = `${text} `;
+             if (icon) current.appendChild(icon);
+          }
+          
+          // Close Dropdown
+          lang.classList.remove('is-active');
+        });
+      });
+    });
+
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      langDropdowns.forEach(lang => {
+          if (!lang.contains(e.target)) {
+              lang.classList.remove('is-active');
+          }
+      });
+    });
+  }
+
+  initFooterLang();
 
 });
