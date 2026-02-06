@@ -186,7 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Hero Slider ---
   const heroSlider = document.querySelector('.hero__slider');
-  if (heroSlider) {
+  // Check if slider exists and is NOT inside a .hero-notswiper container
+  if (heroSlider && !heroSlider.closest('.hero-notswiper')) {
     new Swiper(heroSlider, {
       loop: true,
       // For centeredSlides + slidesPerView: 'auto', we need explicit loopedSlides.
@@ -420,5 +421,60 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initFooterLang();
+
+  // --- Popular Education Slider ---
+  function initPopularEducationSlider() {
+    const slider = document.querySelector('.popular-education__slider');
+    if (!slider) return;
+
+    new Swiper(slider, {
+      slidesPerView: 'auto',
+      spaceBetween: 16,
+      loop: true,
+      observer: true,
+      observeParents: true,
+      navigation: {
+        nextEl: '.popular-education__button-next',
+        prevEl: '.popular-education__button-prev',
+      },
+      breakpoints: {
+        1280: {
+          spaceBetween: 24,
+        }
+      },
+    });
+  }
+
+  initPopularEducationSlider();
+
+  // --- Products Education Tabs ---
+  function initProductsEducationTabs() {
+    const tabs = document.querySelectorAll('.products-education__tab');
+    const contents = document.querySelectorAll('.products-education__content');
+
+    if (!tabs.length || !contents.length) return;
+
+    // Helper to activate content
+    const activate = (index) => {
+        tabs.forEach(t => t.classList.remove('products-education__tab--active'));
+        if (tabs[index]) tabs[index].classList.add('products-education__tab--active');
+
+        contents.forEach(c => c.classList.remove('products-education__content--active'));
+        if (contents[index]) contents[index].classList.add('products-education__content--active');
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          activate(index);
+      });
+    });
+
+    // Initialize first tab as active if none are active, or match the active tab
+    const activeTabIndex = Array.from(tabs).findIndex(t => t.classList.contains('products-education__tab--active'));
+    activate(activeTabIndex >= 0 ? activeTabIndex : 0);
+  }
+
+  initProductsEducationTabs();
 
 });
