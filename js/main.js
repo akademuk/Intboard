@@ -477,4 +477,90 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initProductsEducationTabs();
 
+  // --- Modals (Consultation & Thank You) ---
+  function initModals() {
+    const consultBtns = document.querySelectorAll('.btn--consultation');
+    const consultModal = document.querySelector('.consultation__modal');
+    const thankModal = document.querySelector('.thank__modal');
+    const overlay = document.querySelector('.modal-overlay');
+    const closeBtns = document.querySelectorAll('.consultation__modal-close');
+
+    if (!overlay) return;
+
+    function openModal(modal) {
+      if (!modal) return;
+      modal.classList.add('is-active');
+      overlay.classList.add('is-active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeAllModals() {
+      if (consultModal) consultModal.classList.remove('is-active');
+      if (thankModal) thankModal.classList.remove('is-active');
+      overlay.classList.remove('is-active');
+      document.body.classList.remove('no-scroll');
+    }
+
+    // Open Consultation
+    consultBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(consultModal);
+      });
+    });
+
+    // Close logic (buttons)
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeAllModals();
+      });
+    });
+    
+    // Close logic (overlay)
+    overlay.addEventListener('click', closeAllModals);
+
+    // Close logic (Esc)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const isAnyActive = document.querySelector('.modal.is-active');
+        if (isAnyActive) closeAllModals();
+      }
+    });
+
+    // Handle Form Submission -> Open Thank You
+    if (consultModal) {
+      const form = consultModal.querySelector('form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          // Here you would typically send data to server
+          consultModal.classList.remove('is-active');
+          if (thankModal) {
+             openModal(thankModal);
+          } else {
+             closeAllModals();
+          }
+        });
+      }
+    }
+
+    // Handle "Back to main" button in Thank You modal
+    if (thankModal) {
+        // Assuming the button with type="submit" or "button" inside thank modal acts as close/home
+        const buttons = thankModal.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // If it's a link to home, let it navigate, otherwise close
+                if (btn.getAttribute('href') !== '/') { 
+                   e.preventDefault();
+                   closeAllModals();
+                }
+            });
+        });
+    }
+  }
+
+  initModals();
+
 });
