@@ -528,23 +528,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Handle Form Submission -> Open Thank You
-    if (consultModal) {
-      const form = consultModal.querySelector('form');
-      if (form) {
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          // Here you would typically send data to server
-          consultModal.classList.remove('is-active');
-          if (thankModal) {
-             openModal(thankModal);
-          } else {
-             closeAllModals();
-          }
-        });
-      }
-    }
-
     // Handle "Back to main" button in Thank You modal
     if (thankModal) {
         // Assuming the button with type="submit" or "button" inside thank modal acts as close/home
@@ -552,15 +535,130 @@ document.addEventListener('DOMContentLoaded', () => {
         buttons.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 // If it's a link to home, let it navigate, otherwise close
-                if (btn.getAttribute('href') !== '/') { 
+                if (btn && btn.getAttribute('href') !== '/') { 
                    e.preventDefault();
                    closeAllModals();
                 }
             });
         });
     }
+
+    return { openModal, closeAllModals };
   }
 
-  initModals();
+  const modalActions = initModals();
+
+  // --- Form Validation & Submission ---
+  function initForms() {
+    const forms = document.querySelectorAll('.cta-right-form');
+    const thankModal = document.querySelector('.thank__modal');
+
+    if (!forms.length) return;
+
+    // 1. Phone Mask
+    function maskPhone(input) {
+        input.addEventListener('input', (e) => {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            if (!x[2]) {
+                e.target.value = !x[1] ? '+38 (0' : (x[1] === '380' ? '+38 (0' : '+38 (0' + x[1]); 
+                // Simple fallback to keep prefix. Better mask below:
+                return;
+            }
+            // More robust simple mask: +38 (0XX) XXX-XX-XX
+            let val = e.target.value.replace(/\D/g, ''); // get numbers
+            // Ensure it starts with 380 or 0
+            if (val.startsWith('380')) val = val.slice(3);
+            if (val.startsWith('0')) val = val.slice(1);
+            
+            val = '380' + val; // force prefix
+            
+            let res = '+38 (0' + val.substring(3, 5);
+            if (val.length > 5) res += ') ' + val.substring(5, 8);
+            if (val.length > 8) res += '-' + val.substring(8, 10);
+            if (val.length > 10) res += '-' + val.substring(10, 12);
+            
+            e.target.value = res;
+        });
+
+        // Initial placeholder/prefix on focus
+        input.addEventListener('focus', (e) => {
+            if (e.target.value === '') {
+                e.target.value = '+38 (0';
+            }
+        });
+    }
+
+    // 2. Validation Helper
+    function validateInput(input) {
+        let isValid = true;
+        
+        if (input.required) {
+            if (input.type === 'checkbox') {
+                isValid = input.checked;
+            } else if (input.value.trim() === '') {
+                isValid = false;
+            } else if (input.name.includes('phone')) {
+                // Simple length check for complete mask
+                isValid = input.value.replace(/\D/g, '').length === 12;
+            }
+        }
+
+        if (isValid) {
+            input.classList.remove('is-error');
+            input.classList.add('is-valid');
+        } else {
+            input.classList.remove('is-valid');
+            input.classList.add('is-error');
+        }
+        return isValid;
+    }
+
+    forms.forEach(form => {
+        const inputs = form.querySelectorAll('input, textarea');
+        
+        // Setup listeners
+        inputs.forEach(input => {
+            if (input.name.includes('phone')) {
+                maskPhone(input);
+            }
+            
+            input.addEventListener('blur', () => validateInput(input));
+            input.addEventListener('input', () => {
+                if (input.classList.contains('is-error')) validateInput(input);
+            });
+        });
+
+        // Submit Handler
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isFormValid = true;
+
+            inputs.forEach(input => {
+                if (!validateInput(input)) isFormValid = false;
+            });
+
+            if (isFormValid) {
+                // Close current modal if open (consultation)
+                if (modalActions) modalActions.closeAllModals();
+                
+                // Open Thank You
+                if (thankModal) {
+                    // Need to access openModal from initModals scope or re-select
+                    // Since specific structure, let's just trigger it:
+                    thankModal.classList.add('is-active');
+                    const overlay = document.querySelector('.modal-overlay');
+                    if (overlay) overlay.classList.add('is-active');
+                    document.body.classList.add('no-scroll');
+                }
+                
+                // Reset form
+                form.reset();
+                inputs.forEach(i => i.classList.remove('is-valid'));
+            }
+        });
+    });
+  }
+
+  initForms();
 
 });
