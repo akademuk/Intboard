@@ -230,7 +230,7 @@ h2 {
   left: 0;
   width: 100%;
   height: calc(100vh - 125px);
-  z-index: 99;
+  z-index: 99999;
   overflow-y: auto;
   transition: all 0.3s ease;
   padding-bottom: 40px;
@@ -240,7 +240,7 @@ h2 {
 .menu-navigation .container {
   width: calc(100% - 32px);
   padding: 12px;
-  margin-top: 12px;
+  margin-top: 8px;
   border-radius: 4px;
   background: #FFF;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
@@ -250,6 +250,10 @@ h2 {
   transform: translateY(0);
 }
 
+.menu-navigation.header-scroll-active {
+  top: 80px; /* Adjusted height for collapsed header */
+  height: calc(100vh - 80px);
+}
 
 .header__top {
   background: #EEF2F6;
@@ -3972,7 +3976,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   }
 
   .menu-navigation {
-    top: 145px;
+    top: 143px;
   }
 
   .footer__body {
@@ -4154,7 +4158,7 @@ section.equipment .container.container-hidden.is-expanded::after {
 
   .why-educational .container {
     display: flex;
-    max-width: 1540px;
+    max-width: 1176px;
     align-items: flex-start;
     gap: 64px;
     flex-direction: row;
@@ -4171,15 +4175,15 @@ section.equipment .container.container-hidden.is-expanded::after {
   }
 
   .why-educational__content-image {
-    height: 1024px;
+    height: auto;
     width: 742px;
     position: relative;
   }
 
   .why-educational__content-image img {
     position: absolute;
-    height: 1024px;
-    width: 742px;
+    height: auto;
+    width: 780px;
     left: 0;
     top: 0;
   }

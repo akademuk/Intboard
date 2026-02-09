@@ -175,11 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollThreshold = 50;
 
   if (header) {
+    const menuNav = document.querySelector('.menu-navigation');
     window.addEventListener('scroll', () => {
       if (window.scrollY > scrollThreshold) {
         header.classList.add('header--scroll');
+        if (menuNav) menuNav.classList.add('header-scroll-active');
       } else {
         header.classList.remove('header--scroll');
+        if (menuNav) menuNav.classList.remove('header-scroll-active');
       }
     });
   }
