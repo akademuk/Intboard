@@ -1821,6 +1821,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   align-items: flex-end;
   gap: 12px;
   flex: 1 0 0;
+  text-decoration: none;
 }
 
 .footer__logo img {
@@ -1834,6 +1835,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.14px;
+    text-decoration: none;
 }
 
 .footer__branding .footer__btn {
