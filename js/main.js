@@ -450,6 +450,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initPopularEducationSlider();
 
+  // --- Our Mission Slider ---
+  function initOurMissionSlider() {
+    const slider = document.querySelector('.our-mission__swiper');
+    if (!slider) return;
+
+    new Swiper(slider, {
+      slidesPerView: 'auto',
+      spaceBetween: 16,
+      loop: true,
+      observer: true,
+      observeParents: true,
+      breakpoints: {
+        1280: {
+          spaceBetween: 24,
+        }
+      },
+    });
+  }
+
+  initOurMissionSlider();
+
   // --- Products Education Tabs ---
   function initProductsEducationTabs() {
     const tabs = document.querySelectorAll('.products-education__tab');
@@ -663,5 +684,67 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initForms();
+
+  // --- Counter Animation ---
+  function initCounters() {
+    const counters = document.querySelectorAll('.result-item h3');
+    
+    if (counters.length) {
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const node = entry.target;
+            const originalText = node.textContent;
+            // Match starting number chars/spaces
+            const match = originalText.match(/^([\d\s]+)(.*)$/);
+            
+            if (match) {
+              const numberStr = match[1].replace(/\s/g, '');
+              const target = parseInt(numberStr, 10);
+              const suffix = match[2];
+
+              if (!isNaN(target)) {
+                const duration = 2000;
+                const start = performance.now();
+                
+                const animate = (time) => {
+                  let timeFraction = (time - start) / duration;
+                  if (timeFraction > 1) timeFraction = 1;
+                  
+                  // Ease out
+                  const progress = 1 - Math.pow(1 - timeFraction, 3);
+                  const current = Math.floor(target * progress);
+                  
+                  // Format
+                  const formatted = current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                  
+                  node.textContent = formatted + suffix;
+                  
+                  if (timeFraction < 1) {
+                    requestAnimationFrame(animate);
+                  } else {
+                    node.textContent = originalText;
+                  }
+                };
+                requestAnimationFrame(animate);
+              }
+            }
+            observer.unobserve(node);
+          }
+        });
+      }, { threshold: 0.5 });
+      
+      counters.forEach(c => observer.observe(c));
+    }
+  }
+  
+  initCounters();
+
+  // --- Fancybox ---
+  if (typeof Fancybox !== 'undefined') {
+    Fancybox.bind("[data-fancybox]", {
+      // Custom options
+    });
+  }
 
 });
