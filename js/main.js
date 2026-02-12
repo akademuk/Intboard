@@ -425,30 +425,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initFooterLang();
 
-  // --- Popular Education Slider ---
-  function initPopularEducationSlider() {
-    const slider = document.querySelector('.popular-education__slider');
-    if (!slider) return;
+  // --- Popular Education Slider & Tabs ---
+  function initPopularEducation() {
+    // 1. Init all sliders
+    const sliders = document.querySelectorAll('.popular-education__slider');
 
-    new Swiper(slider, {
-      slidesPerView: 'auto',
-      spaceBetween: 16,
-      loop: true,
-      observer: true,
-      observeParents: true,
-      navigation: {
-        nextEl: '.popular-education__button-next',
-        prevEl: '.popular-education__button-prev',
-      },
-      breakpoints: {
-        1280: {
-          spaceBetween: 24,
+    sliders.forEach(slider => {
+      new Swiper(slider, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        loop: false,
+        centeredSlides: false,
+        observer: true,
+        observeParents: true,
+        breakpoints: {
+          1280: {
+            spaceBetween: 24,
+          }
+        },
+        on: {
+          init: function () {
+             this.update();
+          }
         }
-      },
+      });
     });
+
+    // 2. Custom Navigation (Shared Buttons)
+    const prevBtn = document.querySelector('.popular-education__button-prev');
+    const nextBtn = document.querySelector('.popular-education__button-next');
+
+    function getActiveSwiper() {
+      const activeContent = document.querySelector('.popular-education-tab-content.is-active');
+      if (activeContent) {
+        const slider = activeContent.querySelector('.popular-education__slider');
+        return slider ? slider.swiper : null;
+      }
+      return null;
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const swiper = getActiveSwiper();
+        if (swiper) swiper.slidePrev();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const swiper = getActiveSwiper();
+        if (swiper) swiper.slideNext();
+      });
+    }
+
+    // 3. Tabs Logic
+    const tabs = document.querySelectorAll('.popular-education-tab');
+    const contents = document.querySelectorAll('.popular-education-tab-content');
+
+    if (tabs.length) {
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Active State for Tabs
+                tabs.forEach(t => t.classList.remove('is-active'));
+                tab.classList.add('is-active');
+
+                // Toggle Content
+                const targetSelector = tab.dataset.tabTarget; 
+                if (targetSelector) {
+                   const targetContent = document.querySelector(targetSelector);
+                   
+                   contents.forEach(c => {
+                       c.classList.remove('is-active');
+                       c.style.display = 'none';
+                   });
+
+                   if (targetContent) {
+                       targetContent.classList.add('is-active');
+                       targetContent.style.display = 'block';
+                       
+                       // Update swiper
+                       const swiperEl = targetContent.querySelector('.popular-education__slider');
+                       if (swiperEl && swiperEl.swiper) {
+                           swiperEl.swiper.update();
+                       }
+                   }
+                }
+            });
+        });
+    }
   }
 
-  initPopularEducationSlider();
+  initPopularEducation();
 
   // --- Our Mission Slider ---
   function initOurMissionSlider() {
@@ -739,6 +810,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   initCounters();
+
+  // --- Leaders Slider ---
+  const leadersSliderEl = document.querySelector('.leaders-swiper');
+
+  if (leadersSliderEl) {
+    let leadersSwiper = null;
+
+    function initLeadersSlider() {
+      if (window.innerWidth >= 1280) {
+        if (!leadersSwiper) {
+          leadersSwiper = new Swiper('.leaders-swiper', {
+            slidesPerView: 'auto', 
+            spaceBetween: 24,
+            loop: true,
+            speed: 800,
+            observer: true,
+            observeParents: true,
+          });
+        }
+      } else {
+        if (leadersSwiper) {
+          leadersSwiper.destroy(true, true);
+          leadersSwiper = null;
+        }
+      }
+    }
+
+    initLeadersSlider();
+    window.addEventListener('resize', initLeadersSlider);
+  }
 
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
