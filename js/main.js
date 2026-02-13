@@ -841,6 +841,42 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', initLeadersSlider);
   }
 
+  // --- FAQ Accordions ---
+  function initFaqAccordions() {
+      const triggers = document.querySelectorAll('.faq-accordion__trigger');
+      
+      triggers.forEach(trigger => {
+          trigger.addEventListener('click', () => {
+              const item = trigger.closest('.faq-accordion__item');
+              const parent = trigger.closest('.faq-accordion');
+              
+              if (!item || !parent) return;
+
+              const isActive = item.classList.contains('is-active');
+
+              // Close all others in this list
+              parent.querySelectorAll('.faq-accordion__item').forEach(child => {
+                  if (child !== item) {
+                      child.classList.remove('is-active');
+                      const btn = child.querySelector('.faq-accordion__trigger');
+                      if(btn) btn.setAttribute('aria-expanded', 'false');
+                  }
+              });
+
+              // Toggle current
+              if (isActive) {
+                  item.classList.remove('is-active');
+                  trigger.setAttribute('aria-expanded', 'false');
+              } else {
+                  item.classList.add('is-active');
+                  trigger.setAttribute('aria-expanded', 'true');
+              }
+          });
+      });
+  }
+
+  initFaqAccordions();
+
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
     Fancybox.bind("[data-fancybox]", {
