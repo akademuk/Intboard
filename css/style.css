@@ -2106,11 +2106,55 @@ section.equipment .container.container-hidden.is-expanded::after {
 
 .breadcrumbs {
   padding: 5px 16px;
+  overflow: hidden;
+}
+
+.results__tab-btn {
+  white-space: nowrap;
+}
+
+.quality-standards__results .results__tabs {
+  justify-content: flex-start;
+}
+
+.results__inner {
+  width: 100%;
+}
+
+.quality-standards__results {
+  overflow: hidden;
+  background:#EFF8FF;
+}
+
+.quality-standards__results .certificate-card__image {
+  height: 256px;
+}
+
+.results__tabs {
+  overflow: auto;
+}
+
+.certificate-card__links {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-self: stretch;
+
 }
 
 .breadcrumbs__list {
   display: flex;
   align-items: center;
+  overflow: auto;
+}
+
+.results__content-grid {
+  display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 16px;
+    align-self: stretch;
+    flex-wrap: wrap;
 }
 
 .breadcrumbs__item {
@@ -2152,6 +2196,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   align-items: center;
   padding: 0;
   gap: 0;
+  white-space: nowrap;
   color: #697586;
   font-size: 14px;
   font-weight: 500;
@@ -5227,18 +5272,242 @@ section.equipment .container.container-hidden.is-expanded::after {
   display: none;
 }
 
+.quality-standards-hero .about-page__hero-text{
+  margin-bottom: 0;
+  align-items: flex-start;
+}
 
+.quality-standards__results .results__inner{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  flex: 1 0 0;
+}
 
+.quality-standards__results .results__tab-btn {
+  min-width: 256px;
+}
 
+.quality-standards__results .container {
+  gap: 24px;
+}
 
+.why-educational--quality-standards {
+  background: #D1E9FF;
+}
 
+.quality-standards__results .results__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+}
 
+.results__content-grid .certificate-card {
+  display: flex;
+  min-width: 256px;
+  max-width: 288px;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 31px;
+  flex: 1 0 0;
+}
 
+.results__content-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
 
+.results__content-grid .certificate-card__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  align-self: stretch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
 
+.quality-standards__results .quality-standards__more{
+  max-width: 276px;
+  width: 100%;
+}
 
+.quality-standards__recommended {
+  padding: 64px 16px;
+  position: relative;
+  overflow: hidden;
+}
 
+.quality-standards__recommended .container {
+  display: flex;
+  max-width: 800px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  align-self: stretch;
+  position: relative;
+  z-index: 2;
+}
 
+.quality-standards__recommended-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.quality-standards__recommended-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quality-standards__recommended-left {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 32px;
+  align-self: stretch;
+}
+
+.quality-standards__recommended-left h2 {
+  color: #FFF;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%; 
+  letter-spacing: -0.24px;
+}
+
+.quality-standards__recommended-left p {
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 135%; 
+  letter-spacing: -0.16px;
+  opacity: 0.75;
+}
+
+.quality-standards__recommended-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 16px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.quality-standards__recommended-card {
+  display: flex;
+  width: 176px;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 4px;
+  background: #FFF;
+}
+
+.quality-standards__recommended-card h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  align-self: stretch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
+
+.quality-standards__recommended-img {
+    height: 144px;
+    width: 100%;
+}
+
+.quality-standards__recommended-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.still-questions--quality-standards {
+  padding: 80px 16px;
+  background: #F8FAFC;
+}
+
+.still-questions--quality-standards .still-questions__left-box {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  flex: 1 0 0;
+}
+
+.still-questions__left-item-new {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.still-questions__left-item-new h3 {
+  color: #2E90FA;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.16px;
+}
+
+.still-questions__left-item-new a {
+  color: #0D121C;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.16px;
+}
+
+.still-questions__left-item-new span {
+  color: #0D121C;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
+
+.still-questions__left-item-new p {
+  color: #0D121C;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 135%; 
+  letter-spacing: -0.16px;
+}
+
+.still-questions--quality-standards .cta-right-form {
+  border-radius: 8px;
+  background: #EEF2F6;
+}
 
 @media (min-width: 576px) {
   .why-choose__top {
@@ -7365,6 +7634,115 @@ section.equipment .container.container-hidden.is-expanded::after {
 
     .about-page__hero--partners .btn i {
       font-size: 20px;
+    }
+
+    .quality-standards-hero .about-page__hero-text {
+      margin-bottom: 0;
+      gap: 32px;
+    }
+
+    .why-educational--quality-standards.why-educational .container {
+      max-width: 1548px;
+      align-items: flex-start;
+      gap: 64px;
+      width: 100%;
+    }
+
+    .results__content-grid .certificate-card {
+      width: 276px;
+      height: 338px;
+    }
+
+    .results__content-grid {
+      width: 100%;
+    }
+
+    .quality-standards__results .certificate-card__image {
+      height: 244px;
+    }
+
+    .quality-standards__results .results__content {
+      gap: 30px;
+    }
+
+    .quality-standards__results .container {
+      gap: 42px;
+    }
+
+    .quality-standards__results .results__tabs {
+      width: 100%;
+    }
+
+    .quality-standards__results .results__sidebar{
+      gap: 21px;
+    }
+
+    .quality-standards__results .results__inner {
+      gap: 62px;
+    }
+
+    .quality-standards__results .results__tab-btn {
+      flex: 1 0 0;
+    }
+
+    .quality-standards__recommended {
+      padding: 176px 52px 264px 52px;
+    }
+
+    .quality-standards__recommended .container {
+      display: flex;
+      max-width: 1176px;
+      align-items: flex-start;
+      gap: 124px;
+      flex-direction: row;
+    }
+
+    .quality-standards__recommended-left {
+      max-width: 476px;
+      flex: 1 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+      align-self: stretch;
+    }
+
+    .quality-standards__recommended-left h2 {
+      text-align: left;
+      font-size: 37px;
+      letter-spacing: -0.37px;
+    }
+
+    .quality-standards__recommended-left p {
+      font-size: 24px;
+      letter-spacing: -0.24px;
+      text-align: left;
+    }
+
+    .quality-standards__recommended-right {
+      align-items: flex-start;
+      align-self: auto;
+      gap: 24px;
+    }
+
+    .still-questions__left-item-new h3 {
+      font-size: 24px;
+      letter-spacing: -0.24px;
+    }
+
+    .still-questions__left-item-new a {
+      font-size: 24px;
+      letter-spacing: -0.24px;
+    }
+
+    .still-questions__left-item-new span {
+      font-size: 16px;
+      letter-spacing: -0.16px;
+    }
+    
+    .still-questions__left-item-new p {
+      font-size: 24px;
+      letter-spacing: -0.24px;
     }
 }
 

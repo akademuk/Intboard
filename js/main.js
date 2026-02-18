@@ -877,6 +877,134 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initFaqAccordions();
 
+  // --- Quality Standards Tabs ---
+  function initQualityStandardsTabs() {
+      const tabs = document.querySelectorAll('.quality-standards__results [data-tab-target]');
+      const tabContents = document.querySelectorAll('.quality-standards-tab-content');
+
+      if (tabs.length === 0) return;
+
+      tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+              const targetSelector = tab.dataset.tabTarget;
+              const target = document.querySelector(targetSelector);
+              
+              // Deactivate all tabs
+              tabs.forEach(t => {
+                  t.classList.remove('is-active');
+              });
+              
+              // Hide all contents
+              tabContents.forEach(content => {
+                  content.style.display = 'none';
+                  content.classList.remove('is-active');
+              });
+
+              // Activate clicked tab
+              tab.classList.add('is-active');
+              
+              // Show target content
+              if (target) {
+                  target.style.display = 'flex'; // Changed from 'block' to 'flex' to match original layout if needed, or check CSS
+                  target.classList.add('is-active');
+
+                  // Re-check button visibility just in case
+                  const btn = target.querySelector('.quality-standards__more');
+                  if (btn) {
+                      const hiddenCards = Array.from(target.querySelectorAll('.certificate-card')).filter(c => c.style.display === 'none');
+                      
+                      if (hiddenCards.length === 0) {
+                           btn.style.display = 'none';
+                       } else {
+                           btn.style.display = ''; 
+                       }
+                  }
+              }
+          });
+      });
+  }
+
+  initQualityStandardsTabs();
+
+  function initQualityStandardsLoadMore() {
+    const containers = document.querySelectorAll('.quality-standards-tab-content');
+    
+    if (containers.length === 0) return;
+
+    // Helper to update button visibility
+    function updateButtonState(container, cards, btn) {
+        const hiddenCards = Array.from(cards).filter(c => c.style.display === 'none');
+        if (hiddenCards.length === 0) {
+            btn.style.display = 'none';
+        } else {
+            btn.style.display = ''; // default or flex/block depending on CSS
+        }
+    }
+
+    containers.forEach(container => {
+      const cards = container.querySelectorAll('.certificate-card');
+      const btn = container.querySelector('.quality-standards__more');
+      
+      let defaultVisible = 3; 
+      let batchSize = 3;      
+
+      if (window.matchMedia("(min-width: 1280px)").matches) {
+        defaultVisible = 4;
+        batchSize = 4;
+      }
+      
+      // We only want to set up the initial hiding ONCE, or we need a way to know if it's already initialized.
+      // Or we can rely on the fact that we are just setting style.display = 'none'.
+      
+      // Check if we already processed this container to avoid resetting on re-init if that were happening (it's not here, but good practice).
+      // Since this runs once on load, it's fine.
+
+      // Initial state: hide cards beyond defaultVisible
+      if (cards.length > defaultVisible) {
+         cards.forEach((card, index) => {
+            if (index >= defaultVisible) {
+                card.style.display = 'none';
+            }
+         });
+         if (btn) btn.style.display = ''; // Ensure button is visible initially if there are more cards
+      } else {
+         if (btn) btn.style.display = 'none';
+      }
+
+      // Click handler
+      if (btn) {
+        // Remove old listener if any (simplistic approach: cloning) to avoid duplicates if re-run 
+        // But here we just add one. 
+        
+        // We'll use a named handler or just ensure we don't duplicate logic if this function is called multiple times.
+        // For now, assuming it runs once.
+
+        btn.addEventListener('click', () => {
+             // Find currently hidden cards
+             const hiddenCards = Array.from(cards).filter(c => c.style.display === 'none');
+             
+             // Show next batch
+             for(let i=0; i<batchSize && i<hiddenCards.length; i++) {
+                 hiddenCards[i].style.display = ''; // Reset CSS display
+             }
+             
+             updateButtonState(container, cards, btn);
+        });
+      }
+    });
+
+    // We need to re-evaluate "defaultVisible" if window resizes? 
+    // The user didn't ask for resize responsiveness, but mixing 3 and 4 might cause issues if resized.
+    // For now, sticking to the issue: "button reappears".
+    
+    // If the button reappears, it must be because something is setting its display back to block/inline.
+    // Is there CSS that forces it?
+    // Or is `initQualityStandardsLoadMore` running again? 
+    // It's called once at the bottom.
+  }
+
+  initQualityStandardsLoadMore();
+
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
     Fancybox.bind("[data-fancybox]", {
