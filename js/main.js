@@ -1114,106 +1114,103 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Product Content Toggle (Розгорнути / Згорнути) ---
   function initProductContentToggle() {
+    const DURATION = 500; // must match CSS transition duration
     const buttons = document.querySelectorAll('.product-content-btn');
 
     buttons.forEach(btn => {
-      // Find the collapsible block — previous sibling element of the button
       const block = btn.previousElementSibling;
       if (!block) return;
 
-      // Determine block type for collapsed height & text
       const isSpecs = block.classList.contains('product-content-specifications-table');
       const collapsedHeight = isSpecs ? 500 : 600;
       const textExpand  = isSpecs ? 'Розгорнути все' : 'Розгорнути';
       const textCollapse = 'Згорнути';
+      let isAnimating = false;
+      let isExpanded = false;
 
-      // Wait for images/content to load for correct scrollHeight
-      function getFullHeight() {
-        // Temporarily remove max-height to measure real content height
-        const prevMax = block.style.maxHeight;
-        const prevOverflow = block.style.overflow;
-        block.style.maxHeight = 'none';
-        block.style.overflow = 'hidden';
-        const h = block.scrollHeight;
-        block.style.maxHeight = prevMax;
-        block.style.overflow = prevOverflow;
-        return h;
-      }
-
-      function initCollapse() {
-        const fullHeight = getFullHeight();
-
-        // Only collapse if content is tall enough
-        if (fullHeight <= collapsedHeight + 80) {
-          btn.style.display = 'none';
-          return;
-        }
-
-        // Set initial collapsed state
-        block.style.setProperty('--collapsed-height', collapsedHeight + 'px');
-        block.classList.add('is-collapsed');
-        block.style.maxHeight = collapsedHeight + 'px';
-        block.style.overflow = 'hidden';
-
-        // Set button text
+      function setButtonText(text) {
         const icon = btn.querySelector('i');
         if (icon) {
           icon.remove();
-          btn.textContent = textExpand + ' ';
+          btn.textContent = text + ' ';
           btn.appendChild(icon);
         }
       }
 
-      initCollapse();
+      // Measure full height at init
+      block.style.maxHeight = 'none';
+      const measuredHeight = block.scrollHeight;
+
+      if (measuredHeight <= collapsedHeight + 80) {
+        block.style.maxHeight = '';
+        btn.style.display = 'none';
+        return;
+      }
+
+      // Set initial collapsed state
+      block.style.setProperty('--collapsed-height', collapsedHeight + 'px');
+      block.classList.add('is-collapsed');
+      block.style.maxHeight = collapsedHeight + 'px';
+      block.style.overflow = 'hidden';
+      setButtonText(textExpand);
 
       btn.addEventListener('click', () => {
-        const isCollapsed = block.classList.contains('is-collapsed');
-        const icon = btn.querySelector('i');
+        if (isAnimating) return;
+        isAnimating = true;
 
-        if (isCollapsed) {
-          // Expand
-          const fullHeight = getFullHeight();
-          block.style.maxHeight = fullHeight + 'px';
-          block.classList.remove('is-collapsed');
-          btn.classList.add('is-open');
+        if (!isExpanded) {
+          // --- Expand ---
+          const fullH = block.scrollHeight;
 
-          if (icon) {
-            icon.remove();
-            btn.textContent = textCollapse + ' ';
-            btn.appendChild(icon);
-          }
-
-          // After transition remove max-height & overflow to allow natural flow
-          function onEnd(e) {
-            if (e.propertyName !== 'max-height') return;
-            block.style.maxHeight = 'none';
-            block.style.overflow = 'visible';
-            block.removeEventListener('transitionend', onEnd);
-          }
-          block.addEventListener('transitionend', onEnd);
-
-        } else {
-          // Collapse — first set explicit height so transition works
+          // Ensure start value is committed
+          block.style.maxHeight = collapsedHeight + 'px';
           block.style.overflow = 'hidden';
-          block.style.maxHeight = block.scrollHeight + 'px';
-
-          // Force reflow so browser registers the starting value
           void block.offsetHeight;
 
+          // Remove collapsed class (removes ::after gradient) and animate
+          block.classList.remove('is-collapsed');
+          block.style.maxHeight = fullH + 'px';
+          btn.classList.add('is-open');
+          setButtonText(textCollapse);
+
+          setTimeout(() => {
+            // Disable transition, clear max-height safely, re-enable
+            block.style.transition = 'none';
+            block.style.maxHeight = '';
+            block.style.overflow = '';
+            void block.offsetHeight;
+            block.style.transition = '';
+            isExpanded = true;
+            isAnimating = false;
+          }, DURATION + 50);
+
+        } else {
+          // --- Collapse ---
+          const currentH = block.scrollHeight;
+
+          // Disable transition, set start height, re-enable
+          block.style.transition = 'none';
+          block.style.overflow = 'hidden';
+          block.style.maxHeight = currentH + 'px';
+          void block.offsetHeight;
+          block.style.transition = '';
+
+          // Animate to collapsed height
           block.style.maxHeight = collapsedHeight + 'px';
           block.classList.add('is-collapsed');
           btn.classList.remove('is-open');
+          setButtonText(textExpand);
 
-          if (icon) {
-            icon.remove();
-            btn.textContent = textExpand + ' ';
-            btn.appendChild(icon);
+          // Scroll to block top simultaneously with collapse animation
+          const rect = block.getBoundingClientRect();
+          if (rect.top < 0) {
+            block.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
 
-          // Scroll to the top of the block
           setTimeout(() => {
-            block.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 100);
+            isExpanded = false;
+            isAnimating = false;
+          }, DURATION + 50);
         }
       });
     });
