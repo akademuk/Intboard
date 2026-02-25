@@ -325,16 +325,27 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
+    } else if (contents.length) {
+      // No tabs (e.g. product page reviews) — just init visibility for all content blocks
+      contents.forEach(content => updateVisibility(content, true));
     }
 
     // --- Load More Logic ---
     if (loadMoreBtn) {
       loadMoreBtn.addEventListener('click', () => {
         // Find visible content container
-        const activeContent = Array.from(contents).find(c => c.style.display !== 'none' && c.offsetParent !== null);
+        let activeContent;
+
+        if (tabs.length) {
+          // With tabs — find the one that is not hidden
+          activeContent = Array.from(contents).find(c => c.style.display !== 'none' && c.offsetParent !== null);
+        } else {
+          // Without tabs (e.g. product page) — use the first content block
+          activeContent = contents[0];
+        }
         
         if (activeContent) {
-          const currentCount = parseInt(activeContent.dataset.visibleCount || 4);
+          const currentCount = parseInt(activeContent.dataset.visibleCount || 3);
           const increment = getLoadMoreCount();
           
           activeContent.dataset.visibleCount = currentCount + increment;
@@ -1004,6 +1015,211 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initQualityStandardsLoadMore();
+
+  // --- Product Gallery (Thumbs) ---
+  function initProductGallery() {
+    const mainEl   = document.querySelector('.product-gallery__main');
+    const thumbsEl = document.querySelector('.product-gallery__thumbs');
+    if (!mainEl || !thumbsEl) return;
+
+    const thumbsSwiper = new Swiper(thumbsEl, {
+      spaceBetween: 12,
+      slidesPerView: 'auto',
+      watchSlidesProgress: true,
+      freeMode: true,
+    });
+
+    new Swiper(mainEl, {
+      loop: true,
+      spaceBetween: 0,
+      navigation: {
+        nextEl: '.product-gallery__nav--next',
+        prevEl: '.product-gallery__nav--prev',
+      },
+      thumbs: {
+        swiper: thumbsSwiper,
+      },
+    });
+  }
+
+  initProductGallery();
+
+  // --- Product Countdown Timer ---
+  function initProductTimer() {
+    const timerEl = document.querySelector('.product-timer');
+    if (!timerEl) return;
+
+    const timeEl = timerEl.querySelector('time[datetime]');
+    if (!timeEl) return;
+
+    const targetDate = new Date(timeEl.getAttribute('datetime') + 'T23:59:59');
+    if (isNaN(targetDate)) return;
+
+    const values = timerEl.querySelectorAll('.product-timer__value');
+    const labels = timerEl.querySelectorAll('.product-timer__label');
+
+    if (values.length < 4) return;
+
+    function pluralUk(n, forms) {
+      // forms: [одна, дві-чотири, п'ять+]
+      const abs = Math.abs(n) % 100;
+      const mod = abs % 10;
+      if (abs > 10 && abs < 20) return forms[2];
+      if (mod === 1) return forms[0];
+      if (mod >= 2 && mod <= 4) return forms[1];
+      return forms[2];
+    }
+
+    const labelForms = [
+      ['день', 'дні', 'днів'],
+      ['год', 'год', 'год'],
+      ['хв', 'хв', 'хв'],
+      ['сек', 'сек', 'сек'],
+    ];
+
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function tick() {
+      const now  = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        values.forEach(v => v.textContent = '00');
+        labels.forEach((l, i) => l.textContent = labelForms[i][2]);
+        timerEl.classList.add('is-expired');
+        clearInterval(timerId);
+        return;
+      }
+
+      const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const nums = [days, hours, minutes, seconds];
+
+      nums.forEach((n, i) => {
+        values[i].textContent = pad(n);
+        labels[i].textContent = pluralUk(n, labelForms[i]);
+      });
+    }
+
+    tick();
+    const timerId = setInterval(tick, 1000);
+  }
+
+  initProductTimer();
+
+  // --- Product Content Toggle (Розгорнути / Згорнути) ---
+  function initProductContentToggle() {
+    const buttons = document.querySelectorAll('.product-content-btn');
+
+    buttons.forEach(btn => {
+      // Find the collapsible block — previous sibling element of the button
+      const block = btn.previousElementSibling;
+      if (!block) return;
+
+      // Determine block type for collapsed height & text
+      const isSpecs = block.classList.contains('product-content-specifications-table');
+      const collapsedHeight = isSpecs ? 500 : 600;
+      const textExpand  = isSpecs ? 'Розгорнути все' : 'Розгорнути';
+      const textCollapse = 'Згорнути';
+
+      // Wait for images/content to load for correct scrollHeight
+      function getFullHeight() {
+        // Temporarily remove max-height to measure real content height
+        const prevMax = block.style.maxHeight;
+        const prevOverflow = block.style.overflow;
+        block.style.maxHeight = 'none';
+        block.style.overflow = 'hidden';
+        const h = block.scrollHeight;
+        block.style.maxHeight = prevMax;
+        block.style.overflow = prevOverflow;
+        return h;
+      }
+
+      function initCollapse() {
+        const fullHeight = getFullHeight();
+
+        // Only collapse if content is tall enough
+        if (fullHeight <= collapsedHeight + 80) {
+          btn.style.display = 'none';
+          return;
+        }
+
+        // Set initial collapsed state
+        block.style.setProperty('--collapsed-height', collapsedHeight + 'px');
+        block.classList.add('is-collapsed');
+        block.style.maxHeight = collapsedHeight + 'px';
+        block.style.overflow = 'hidden';
+
+        // Set button text
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.remove();
+          btn.textContent = textExpand + ' ';
+          btn.appendChild(icon);
+        }
+      }
+
+      initCollapse();
+
+      btn.addEventListener('click', () => {
+        const isCollapsed = block.classList.contains('is-collapsed');
+        const icon = btn.querySelector('i');
+
+        if (isCollapsed) {
+          // Expand
+          const fullHeight = getFullHeight();
+          block.style.maxHeight = fullHeight + 'px';
+          block.classList.remove('is-collapsed');
+          btn.classList.add('is-open');
+
+          if (icon) {
+            icon.remove();
+            btn.textContent = textCollapse + ' ';
+            btn.appendChild(icon);
+          }
+
+          // After transition remove max-height & overflow to allow natural flow
+          function onEnd(e) {
+            if (e.propertyName !== 'max-height') return;
+            block.style.maxHeight = 'none';
+            block.style.overflow = 'visible';
+            block.removeEventListener('transitionend', onEnd);
+          }
+          block.addEventListener('transitionend', onEnd);
+
+        } else {
+          // Collapse — first set explicit height so transition works
+          block.style.overflow = 'hidden';
+          block.style.maxHeight = block.scrollHeight + 'px';
+
+          // Force reflow so browser registers the starting value
+          void block.offsetHeight;
+
+          block.style.maxHeight = collapsedHeight + 'px';
+          block.classList.add('is-collapsed');
+          btn.classList.remove('is-open');
+
+          if (icon) {
+            icon.remove();
+            btn.textContent = textExpand + ' ';
+            btn.appendChild(icon);
+          }
+
+          // Scroll to the top of the block
+          setTimeout(() => {
+            block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      });
+    });
+  }
+
+  initProductContentToggle();
 
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
