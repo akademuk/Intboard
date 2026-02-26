@@ -1218,6 +1218,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initProductContentToggle();
 
+  // --- Drivers Tabs & Accordion ---
+  function initDriversTabs() {
+    const tabsContainer = document.querySelector('.drivers-section__tabs');
+    if (!tabsContainer) return;
+
+    const tabs = tabsContainer.querySelectorAll('.drivers-section__tab');
+    const panels = document.querySelectorAll('.drivers-section__content-main');
+
+    // Hide all panels except the active tab's panel
+    function showPanel(target) {
+      panels.forEach(panel => {
+        panel.hidden = panel.dataset.tab !== target;
+      });
+    }
+
+    // Set initial state
+    const activeTab = tabsContainer.querySelector('.drivers-section__tab.is-active');
+    if (activeTab) {
+      showPanel(activeTab.dataset.target);
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        showPanel(tab.dataset.target);
+      });
+    });
+
+    // FAQ Accordion inside drivers section
+    const triggers = document.querySelectorAll('.drivers-section .faq-accordion__trigger');
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-accordion__item');
+        const body = item.querySelector('.faq-accordion__body');
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all other accordions in the same panel
+        const panel = trigger.closest('.drivers-section__content-main');
+        if (panel) {
+          panel.querySelectorAll('.faq-accordion__trigger').forEach(otherTrigger => {
+            if (otherTrigger !== trigger) {
+              otherTrigger.setAttribute('aria-expanded', 'false');
+              const otherItem = otherTrigger.closest('.faq-accordion__item');
+              otherItem.classList.remove('is-open');
+              const otherBody = otherItem.querySelector('.faq-accordion__body');
+              otherBody.style.maxHeight = null;
+            }
+          });
+        }
+
+        // Toggle current
+        if (isOpen) {
+          trigger.setAttribute('aria-expanded', 'false');
+          item.classList.remove('is-open');
+          body.style.maxHeight = null;
+        } else {
+          trigger.setAttribute('aria-expanded', 'true');
+          item.classList.add('is-open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
+  initDriversTabs();
+
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
     Fancybox.bind("[data-fancybox]", {
