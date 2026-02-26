@@ -7368,6 +7368,91 @@ section.equipment .container.container-hidden.is-expanded::after {
   letter-spacing: -0.14px;
 }
 
+.cta-right-form h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.24px;
+}
+
+.activation-questions .still-questions__right {
+  min-width: 256px;
+  flex: 1 0 0;
+}
+
+.cta-right-form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+}
+
+.activation-questions .still-questions__left {
+  min-width: 256px;
+  gap: 32px;
+  flex: 1 0 0;
+}
+
+.still-questions__left-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.still-questions__left-title h3 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.24px;
+}
+
+.still-questions__left-title p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 135%; 
+  letter-spacing: -0.16px;
+}
+
+.still-questions__left-gallery {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.still-questions__left-gallery-image {
+  padding: 16px;
+  border-radius: 4px;
+  background: #FFF;
+}
+
+.still-questions__left-gallery-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.maps {
+  height: 376px;
+}
+
+.maps img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.activation-faq {
+  padding: 64px 16px;
+  background:#E3E8EF;
+}
+
+.activation-faq .container {
+  gap: 32px;
+}
+
 @media (min-width: 576px) {
   .why-choose__top {
     padding-top: 0;
@@ -10168,6 +10253,29 @@ section.equipment .container.container-hidden.is-expanded::after {
   .faq-accordion__content-content h3 {
     font-size: 16px;
     letter-spacing: -0.16px;
+  }
+
+  .cta-right-form h2 {
+    font-size: 37px;
+    letter-spacing: -0.37px;
+    margin-bottom: 12px;
+  }
+
+  .still-questions__left-title {
+    gap: 24px;
+  }
+
+  .still-questions__left-title h3 {
+    font-size: 37px;
+    letter-spacing: -0.37px;
+  }
+
+  .activation-faq {
+    padding: 96px 52px;
+  }
+
+  .activation-faq .container {
+    gap: 64px;
   }
 
 }
