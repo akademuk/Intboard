@@ -1285,6 +1285,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initDriversTabs();
 
+  // --- Contact Page Maps Tabs ---
+  function initContactMaps() {
+    const mapsTabs = document.querySelectorAll('.contact-page-maps-tabs-btn');
+    const mapsImages = document.querySelectorAll('.contact-page-maps-img');
+
+    if (mapsTabs.length === 0 || mapsImages.length === 0) return;
+
+    // Set initial state: show only the active tab's map
+    function showMap(mapKey) {
+      mapsImages.forEach(img => {
+        img.classList.toggle('is-active', img.dataset.map === mapKey);
+      });
+    }
+
+    // Activate the first tab's map on load
+    const activeTab = document.querySelector('.contact-page-maps-tabs-btn.is-active');
+    if (activeTab) {
+      showMap(activeTab.dataset.map);
+    }
+
+    mapsTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Toggle active class on buttons
+        mapsTabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+
+        // Show corresponding map
+        showMap(tab.dataset.map);
+      });
+    });
+  }
+
+  initContactMaps();
+
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
     Fancybox.bind("[data-fancybox]", {

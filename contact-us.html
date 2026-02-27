@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ваш запит прийнято!</title>
+    <title>Інструкції та драйвери</title>
 
     <link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="libs/fancybox/fancybox.css">
@@ -135,32 +135,118 @@
                             Головна</a>
                     </li>
                     <li class="breadcrumbs__item">
-                        <span class="breadcrumbs__current link">Ваш запит прийнято!</span>
+                        <span class="breadcrumbs__current link">Контакти</span>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="section404-image">
-            <img src="images/accepted.png" width="1920" height="400" loading="lazy" alt="">
-        </div>
-
-        <div class="section404-page">
+        <section class="hero__small partners-hero">
             <div class="container">
-                <div class="section404-page-section">
-                    <h2>Ваш запит прийнято!</h2>
-                    <p>Менеджер зв'яжеться з вами найближчим часом.</p>
-                    <div class="section404-page-section-action">
-                        <a href="/" class="btn btn--orange">
-                            <i class="icon-namechevron-left"></i>
-                            Повернутись на головну
-                        </a>
-                        <a href="/" class="btn btn--blue">
-                            До каталогу
-                            <i class="icon-nameproducts"></i>
-                        </a>
+                <div class="about-page__hero-inner">
+                    <h1>Контакти</h1>
+                </div>
+            </div>
+            <div class="hero__small-bg">
+                <img src="images/contact.jpg" width="1920" height="266" loading="lazy" alt="">
+            </div>
+        </section>
+
+        <section class="contact-page">
+            <div class="container">
+                <div class="contact-page__top">
+                    <div class="contact-page__top-info">
+                        <div class="contact-page__top-info-left">
+                            <h3>Довідка:</h3>
+                            <a href="tel:+380631505488" class="contact-page__top-info-left-phone">+38 (063)
+                                150-54-88</a>
+                            <a href="mailto:info@intboard.ua"
+                                class="contact-page__top-info-left-email">info@intboard.ua</a>
+                            <p class="contact-page__top-info-left-hours">Пн-Пт: 09:00 - 18:00</p>
+                        </div>
+                        <div class="still-questions__left-action">
+                            <a href="/" class="btn still-questions__left-action-link">Центр підтримки INTBOARD</a>
+                            <a href="/" class="btn btn--blue">Telegram Бот
+                                <img src="images/tg.svg" width="24" height="24" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-page__top-cards">
+                        <article class="contact-page__top-cards-item">
+                            <h3>Україна, Конотоп:</h3>
+                            <p>м. Конотоп, пр. Миру, 34</p>
+                        </article>
+                        <article class="contact-page__top-cards-item">
+                            <h3>Україна, Київ:</h3>
+                            <p>м. Київ, вул. Вінстона Черчилля (Червоноткацька), буд. 83</p>
+                        </article>
+                        <article class="contact-page__top-cards-item">
+                            <h3>Польща, Люблін:</h3>
+                            <p>ul. Marii Curie-Skłodowskiej 3/27, 20-029 Lublin</p>
+                            <a href="https://www.intboard.pl">www.intboard.pl</a>
+                        </article>
                     </div>
                 </div>
+                <div class="contact-page__bottom">
+                    <form class="cta-right-form">
+                        <div class="contact-page__title">
+                            <h3>Зв'язатися з нами</h3>
+                            <p>Якщо у вас залишились питання або пропозиції — 
+                            ми готові надати вам швидку та кваліфіковану консультацію</p>
+                        </div>
+                        <div class="contact-page__boxs">
+                            <div class="contact-page__boxs-row">
+                                <div class="form__box">
+                                    <label for="name">Ваше ім'я:</label>
+                                    <input type="text" id="name" name="name" placeholder="Наприклад, Олексій" required>
+                                </div>
+                                <div class="form__box">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email" placeholder="svitozar@nush.ua" required>
+                                </div>
+                                <div class="form__box">
+                                    <label for="subject">Тема:</label>
+                                    <input type="text" id="subject" name="subject" placeholder="Наприклад, GT75" required>
+                                </div>
+                            </div>
+                            <div class="form__box">
+                                <label for="message">Повідомлення:</label>
+                                <textarea id="message" name="message"
+                                    placeholder="Опишіть деталі вашого питання..." required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="contact-page__boxs-action">
+                            <div class="form__box-radio">
+                                <input type="checkbox" id="consent2" name="consent2" required>
+                                <label for="consent2">Я даю згоду на обробку моїх персональних даних</label>
+                            </div>
+                            <button type="submit" class="btn btn--blue">Надіслати
+                                <i class="icon-namechevron-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <div class="contact-page-maps">
+            <div class="container">
+                <div class="contact-page-maps-tabs">
+                    <button class="contact-page-maps-tabs-btn is-active" data-map="kyiv">Офіс у Києві</button>
+                    <button class="contact-page-maps-tabs-btn" data-map="konotop">Офіс у Конотопі</button>
+                    <button class="contact-page-maps-tabs-btn" data-map="lublin">Офіс у Польщі</button>
+                </div>
+            </div>
+
+            <div class="contact-page-maps-img" data-map="kyiv">
+                <img src="images/maps-big.png" width="1920" height="576" loading="lazy" alt="">
+            </div>
+            <div class="contact-page-maps-img" data-map="konotop">
+                <img src="images/maps-big.png" width="1920" height="576" loading="lazy" alt="">
+            </div>
+            <div class="contact-page-maps-img" data-map="lublin">
+                <img src="images/maps-big.png" width="1920" height="576" loading="lazy" alt="">
             </div>
         </div>
 
