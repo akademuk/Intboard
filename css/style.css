@@ -7931,6 +7931,18 @@ section.equipment .container.container-hidden.is-expanded::after {
     font-size: 16px;
   }
 
+  .header__phone {
+    color: #0D121C;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .header__menu-link {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.14px;
+  }
+
   .header__menu-arrow {
     display: inline-block;
     margin-left: 6px;
