@@ -7453,6 +7453,165 @@ section.equipment .container.container-hidden.is-expanded::after {
   gap: 32px;
 }
 
+.section404-image {
+  width: 100%;
+  height: 400px;
+}
+
+.section404-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section404-page {
+  padding: 16px 16px 64px 16px;
+}
+
+.section404-page .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  align-self: stretch;
+}
+
+.section404-page-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  flex: 1 0 0;
+}
+
+.section404-page-section h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%; 
+  letter-spacing: -0.24px;
+}
+
+.section404-page-section p {
+  color:#102A56;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 135%;
+  letter-spacing: -0.16px;
+}
+
+.section404-page-list {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 16px 48px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.section404-page-item {
+  min-width: 276px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  border-radius: 8px;
+  flex: 1 0 0;
+}
+
+.section404-page-item h3 {
+  color: #1570EF;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 135%; 
+  letter-spacing: -0.16px;
+}
+
+.section404-page-item p {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
+
+.section404-page-item .btn img{
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.section404-page-section-action {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.section404-page-section-action .btn {
+  flex: 1 0 0;  
+  min-width: 200px;
+  white-space: nowrap;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (min-width: 576px) {
   .why-choose__top {
     padding-top: 0;
@@ -10276,6 +10435,11 @@ section.equipment .container.container-hidden.is-expanded::after {
 
   .activation-faq .container {
     gap: 64px;
+  }
+
+  .section404-page-section-action .btn {
+    min-width: auto;
+    flex: none;
   }
 
 }
