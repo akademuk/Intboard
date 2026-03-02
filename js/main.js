@@ -1319,10 +1319,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initContactMaps();
 
+  // --- Blog Filter ---
+  function initBlogFilter() {
+    const filterLinks = document.querySelectorAll('.blog-filter-link');
+    const blogItems = document.querySelectorAll('.blog-page-item');
+
+    if (filterLinks.length === 0 || blogItems.length === 0) return;
+
+    // Set first filter as active
+    filterLinks[0].classList.add('is-active');
+
+    filterLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Toggle active class
+        filterLinks.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+
+        const filterValue = link.textContent.trim();
+
+        blogItems.forEach(item => {
+          if (filterValue === 'Усі') {
+            item.style.display = '';
+            return;
+          }
+
+          const badge = item.querySelector('.blog-page-item-link__badge');
+          const badgeText = badge ? badge.textContent.trim() : '';
+
+          item.style.display = (badgeText === filterValue) ? '' : 'none';
+        });
+      });
+    });
+  }
+
+  initBlogFilter();
+
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
     Fancybox.bind("[data-fancybox]", {
       // Custom options
+    });
+  }
+
+  // --- Similar Articles Slider ---
+  const similarSlider = document.querySelector('.similar-articles__slider');
+  if (similarSlider) {
+    new Swiper(similarSlider, {
+      slidesPerView: 'auto',
+      spaceBetween: 16,
+      navigation: {
+        prevEl: '.similar-articles__button-prev',
+        nextEl: '.similar-articles__button-next',
+      },
     });
   }
 
