@@ -8498,11 +8498,149 @@ section.equipment .container.container-hidden.is-expanded::after {
   font-size: 16px;
 }
 
+.privacy-policy {
+  padding: 32px 16px;
+}
 
+.privacy-policy__left .cta-right-form {
+  display: none;
+}
 
+.privacy-policy__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  min-width: 276px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
 
+.privacy-policy__left h2 {
+  color: #0D121C;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%; 
+  letter-spacing: -0.24px;
+}
 
+.privacy-policy__left-list {
+  display: flex;
+  padding-left: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  border-left: 4px solid #2E90FA;
+}
 
+.privacy-policy .container {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 48px;
+  flex: 1 0 0;
+  flex-wrap: wrap;
+}
+
+.privacy-policy__left-list-link {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  color: #0D121C;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+  text-decoration: none;
+}
+
+.privacy-policy__left-list-link::before {
+  content: "";
+  background: url(../images/icons/link.svg);
+  width: 20px;
+  height: 20px;
+  aspect-ratio: 1/1;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-shrink: 0;
+  transition: transform 0.4s ease;
+}
+
+.privacy-policy__left-list-link:hover {
+  color: #EF6820;
+}
+
+.privacy-policy__left-list-link:hover::before {
+  filter: brightness(0) saturate(100%) invert(77%) sepia(58%) saturate(7079%) hue-rotate(347deg) brightness(95%) contrast(97%);
+}
+
+.privacy-policy__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  min-width: 276px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.privacy-policy__right-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.privacy-policy__right-content h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  align-self: stretch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 135%; 
+  letter-spacing: -0.16px;
+}
+
+.privacy-policy__right-description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #0D121C;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 135%; 
+  letter-spacing: -0.14px;
+}
+
+.privacy-policy__right-content-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.privacy-policy__right-content-item {
+  color: #0D121C;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
+
+.privacy-policy__right-content {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
 
 
 
@@ -11897,6 +12035,70 @@ section.equipment .container.container-hidden.is-expanded::after {
 
   .header-search__btn i {
     font-size: 20px;
+  }
+
+  .privacy-policy {
+    padding: 96px 52px 64px 52px;
+  }
+
+  .privacy-policy .container {
+    gap: 124px;
+  }
+
+  .privacy-policy__left{
+    gap: 48px;
+    min-width: 276px;
+    max-width: 376px;
+    align-self: auto;
+    position: sticky;
+    top: 90px;
+  }
+
+  .privacy-policy__left h2 {
+    font-size: 37px;
+    font-weight: 600;
+    line-height: 135%;
+    letter-spacing: -0.37px;
+  }
+
+  .privacy-policy__left-list {
+      gap: 8px;
+  }
+
+  .privacy-policy__left-list-link {
+    padding: 8px;
+  }
+
+  .privacy-policy__right-content {
+    padding: 0 24px;
+  }
+
+  .privacy-policy__right-content h3 {
+    font-size: 24px;
+    letter-spacing: -0.24px;
+  }
+
+  .privacy-policy__right-content p {
+    font-size: 16px;
+    letter-spacing: -0.16px;
+  }
+
+  .privacy-policy__right-content-item {
+    font-size: 16px;
+    letter-spacing: -0.16px;
+  }
+
+  .privacy-policy__left .cta-right-form {
+    display: flex;
+    padding: 32px 24px;
+    border-radius: 8px;
+    background: #EEF2F6;
+    min-width: 100%;
+    gap: 24px;
+  }
+
+  .privacy-policy-questions .container{
+    gap: 124px;
   }
 }
 
