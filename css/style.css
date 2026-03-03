@@ -408,6 +408,24 @@ h2 {
   color: #EF6820;
 }
 
+.header__btn-search:hover .header__actions-text,
+.header__btn-search:focus .header__actions-text,
+.header__btn-search:active .header__actions-text {
+  color: #EF6820;
+}
+
+.header__btn-basket:hover .header__actions-text,
+.header__btn-basket:focus .header__actions-text,
+.header__btn-basket:active .header__actions-text {
+  color: #EF6820;
+}
+
+.header__btn-lang:hover .header__actions-text,
+.header__btn-lang:focus .header__actions-text,
+.header__btn-lang:active .header__actions-text {
+  color: #EF6820;
+}
+
 .header__inner {
   display: flex;
   justify-content: space-between;
@@ -535,6 +553,95 @@ h2 {
 
 .header__actions-text {
   display: none;
+}
+
+/* Header Search Panel */
+.header-search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: #EEF2F6;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  pointer-events: none;
+  padding: 8px 16px;
+}
+
+.header-search.is-active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header-search__inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-search__input {
+  flex: 1;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid #E3E8EF;
+  border-radius: 6px;
+  background: #FFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #0D121C;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.header-search__input::placeholder {
+  color: #9AA4B2;
+}
+
+.header-search__input:focus {
+  border-color: #2E90FA;
+}
+
+.header-search__btn {
+  flex-shrink: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header-search__close {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #E3E8EF;
+  border-radius: 6px;
+  background: #FFF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.header-search__close i {
+  font-size: 18px;
+  color: #364152;
+}
+
+.header-search__close:hover {
+  border-color: #2E90FA;
+}
+
+.header-search__close:hover i {
+  color: #2E90FA;
 }
 
 @keyframes fadeIn {
@@ -5941,7 +6048,7 @@ section.equipment .container.container-hidden.is-expanded::after {
 }
 
 .catalog-product__link .popular-education__img {
-  height: 337px;
+  height: 100%;
   border-radius: 4px;
 }
 
@@ -7931,6 +8038,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   display: flex;
   height: 476px;
   width: 360px;
+  flex: 1 0 0;
   min-width: 276px;
   flex-direction: column;
   justify-content: space-between;
@@ -8368,8 +8476,27 @@ section.equipment .container.container-hidden.is-expanded::after {
   min-height: 40px;
 }
 
+.blog-page-list .popular-education__card {
+    height: auto;
+    width: 360px;
+    min-width: 276px;
+}
 
+.blog-page-list .popular-education__card {
+  flex: 1 0 0;
+}
 
+.search-filter .container h3{
+  display: none;
+}
+
+.header-search__btn span{
+  display: none;
+}
+
+.header-search__btn i {
+  font-size: 16px;
+}
 
 
 
@@ -11721,6 +11848,55 @@ section.equipment .container.container-hidden.is-expanded::after {
 
   .similar-articles__title {
     flex-direction: row;
+  }
+
+  .blog-page-item {
+    flex: none;
+  }
+
+  .blog-page-list .popular-education__card {
+    flex: none;
+  }
+
+  .search-page .blog-page-list{
+    gap: 24px;
+  }
+
+  .search-hero {
+    padding: 24px 52px;
+  }
+
+  .search-hero .about-page__hero-text {
+    margin-bottom: 0;
+  }
+
+  .search-filter .container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .search-filter .container h3 {
+    display: flex;
+    color: #364152;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 135%;
+    letter-spacing: -0.16px;
+  }
+
+  .header-search__btn span {
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 135%; 
+    display: flex;
+    letter-spacing: -0.16px;
+  }
+
+  .header-search__btn i {
+    font-size: 20px;
   }
 }
 

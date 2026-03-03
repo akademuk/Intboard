@@ -21,6 +21,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initMenu();
 
+  // --- Header Search Panel ---
+  function initHeaderSearch() {
+    const searchBtn = document.querySelector('.header__btn-search');
+    const searchPanel = document.querySelector('.header-search');
+    const closeBtn = document.querySelector('.header-search__close');
+    const searchInput = document.querySelector('.header-search__input');
+
+    if (!searchBtn || !searchPanel) return;
+
+    searchBtn.addEventListener('click', () => {
+      searchPanel.classList.add('is-active');
+      setTimeout(() => searchInput && searchInput.focus(), 350);
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        searchPanel.classList.remove('is-active');
+      });
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchPanel.classList.contains('is-active')) {
+        searchPanel.classList.remove('is-active');
+      }
+    });
+  }
+
+  initHeaderSearch();
+
   function initMobileSubmenu() {
     const menuItems = document.querySelectorAll('.mobile-menu__item');
 
@@ -1321,6 +1351,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Blog Filter ---
   function initBlogFilter() {
+    // Skip on search page — handled by initSearchFilter
+    if (document.querySelector('.search-page')) return;
+
     const filterLinks = document.querySelectorAll('.blog-filter-link');
     const blogItems = document.querySelectorAll('.blog-page-item');
 
@@ -1365,6 +1398,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initBlogFilter();
+
+  // --- Search Filter ---
+  function initSearchFilter() {
+    const searchPage = document.querySelector('.search-page');
+    if (!searchPage) return;
+
+    const filterLinks = document.querySelectorAll('.search-filter .blog-filter-link');
+    const blogItems = searchPage.querySelectorAll('.blog-page-item');
+    const catalogItems = searchPage.querySelectorAll('.popular-education__card');
+
+    if (filterLinks.length === 0) return;
+
+    filterLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        filterLinks.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+
+        // Get filter text without the count span
+        const span = link.querySelector('span');
+        const filterValue = span
+          ? link.textContent.replace(span.textContent, '').trim()
+          : link.textContent.trim();
+
+        if (filterValue === 'Каталог') {
+          blogItems.forEach(item => item.style.display = 'none');
+          catalogItems.forEach(item => item.style.display = '');
+        } else {
+          catalogItems.forEach(item => item.style.display = 'none');
+          blogItems.forEach(item => {
+            const badge = item.querySelector('.blog-page-item-link__badge');
+            const badgeText = badge ? badge.textContent.trim() : '';
+            item.style.display = (badgeText === filterValue) ? '' : 'none';
+          });
+        }
+      });
+    });
+  }
+
+  initSearchFilter();
 
   // --- Fancybox ---
   if (typeof Fancybox !== 'undefined') {
