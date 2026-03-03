@@ -1326,6 +1326,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (filterLinks.length === 0 || blogItems.length === 0) return;
 
+    function updateFeatured() {
+      blogItems.forEach(item => item.classList.remove('blog-page-item--featured'));
+      const firstVisible = Array.from(blogItems).find(item => item.style.display !== 'none');
+      if (firstVisible) {
+        firstVisible.classList.add('blog-page-item--featured');
+      }
+    }
+
     // Set first filter as active
     filterLinks[0].classList.add('is-active');
 
@@ -1350,6 +1358,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
           item.style.display = (badgeText === filterValue) ? '' : 'none';
         });
+
+        updateFeatured();
       });
     });
   }
