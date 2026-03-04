@@ -7234,6 +7234,9 @@ section.equipment .container.container-hidden.is-expanded::after {
 .faq-accordion-col {
   min-width: 256px;
   flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .product-content-faq {
@@ -8477,20 +8480,20 @@ section.equipment .container.container-hidden.is-expanded::after {
 }
 
 .blog-page-list .popular-education__card {
-    height: auto;
-    width: 360px;
-    min-width: 276px;
+  height: auto;
+  width: 360px;
+  min-width: 276px;
 }
 
 .blog-page-list .popular-education__card {
   flex: 1 0 0;
 }
 
-.search-filter .container h3{
+.search-filter .container h3 {
   display: none;
 }
 
-.header-search__btn span{
+.header-search__btn span {
   display: none;
 }
 
@@ -8520,7 +8523,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   color: #0D121C;
   font-size: 24px;
   font-weight: 600;
-  line-height: 135%; 
+  line-height: 135%;
   letter-spacing: -0.24px;
 }
 
@@ -8606,7 +8609,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   text-overflow: ellipsis;
   font-size: 16px;
   font-weight: 600;
-  line-height: 135%; 
+  line-height: 135%;
   letter-spacing: -0.16px;
 }
 
@@ -8617,7 +8620,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   color: #0D121C;
   font-size: 14px;
   font-weight: 400;
-  line-height: 135%; 
+  line-height: 135%;
   letter-spacing: -0.14px;
 }
 
@@ -8642,7 +8645,156 @@ section.equipment .container.container-hidden.is-expanded::after {
   letter-spacing: -0.14px;
 }
 
+.achievements-numbers {
+  padding: 48px 52px;
+}
 
+.achievements-numbers .container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  flex: 1 0 0;
+}
+
+.achievements-numbers h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.24px;
+}
+
+.achievements-numbers__list {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.achievements-numbers__item {
+  min-width: 136px;
+  flex: 1 0 0;
+}
+
+.achievements-numbers__item h3 {
+  padding-left: 8px;
+  color: #1570EF;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 135%;
+  letter-spacing: -0.45px;
+}
+
+.achievements-numbers__item p {
+  padding: 16px;
+  border-top: 2px solid #1570EF;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 135%;
+  letter-spacing: -0.14px;
+}
+
+.level__increase--tenders {
+  background: #F8FAFC;
+}
+
+.procurement-system {
+  padding: 64px 16px;
+}
+
+.procurement-system .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  align-self: stretch;
+}
+
+.procurement-system .container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.24px;
+  width: 100%;
+}
+
+.procurement-system-main {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  gap: 16px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.procurement-system-left {
+  min-width: 256px;
+  padding: 64px 24px;
+  background: #EEF2F6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  align-self: stretch;
+  flex: 1 0 0;
+  border-radius: 8px;
+}
+
+.procurement-system-left h3 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 135%;
+  letter-spacing: -0.16px;
+}
+
+.procurement-system-right {
+  height: 260px;
+  min-width: 256px;
+  flex: 1 0 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.procurement-system-right a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.procurement-system-right .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  height: 56px;
+  width: 56px;
+  border-radius: 99px;
+}
+
+.procurement-system-right video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-content-faq--tenders {
+  padding: 64px 16px;
+  background: #F8FAFC;
+}
+
+.product-content-faq--tenders .container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  align-self: stretch;
+}
 
 
 @media (min-width: 576px) {
@@ -11996,7 +12148,7 @@ section.equipment .container.container-hidden.is-expanded::after {
     flex: none;
   }
 
-  .search-page .blog-page-list{
+  .search-page .blog-page-list {
     gap: 24px;
   }
 
@@ -12028,7 +12180,7 @@ section.equipment .container.container-hidden.is-expanded::after {
     text-align: center;
     font-size: 16px;
     font-weight: 600;
-    line-height: 135%; 
+    line-height: 135%;
     display: flex;
     letter-spacing: -0.16px;
   }
@@ -12045,7 +12197,7 @@ section.equipment .container.container-hidden.is-expanded::after {
     gap: 124px;
   }
 
-  .privacy-policy__left{
+  .privacy-policy__left {
     gap: 48px;
     min-width: 276px;
     max-width: 376px;
@@ -12062,7 +12214,7 @@ section.equipment .container.container-hidden.is-expanded::after {
   }
 
   .privacy-policy__left-list {
-      gap: 8px;
+    gap: 8px;
   }
 
   .privacy-policy__left-list-link {
@@ -12097,9 +12249,97 @@ section.equipment .container.container-hidden.is-expanded::after {
     gap: 24px;
   }
 
-  .privacy-policy-questions .container{
+  .privacy-policy-questions .container {
     gap: 124px;
   }
+
+  .achievements-numbers {
+    padding: 96px 52px;
+  }
+
+  .achievements-numbers h2 {
+    font-size: 37px;
+    letter-spacing: -0.37px;
+  }
+
+  .achievements-numbers__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+  }
+
+  .achievements-numbers__item h3 {
+    font-size: 55px;
+    letter-spacing: -0.55px;
+  }
+
+  .achievements-numbers__item p {
+    padding: 16px 24px 16px 32px;
+    border-left: 4px solid #1570EF;
+    border-top: 0;
+    text-align: left;
+    font-size: 16px;
+    letter-spacing: -0.16px;
+  }
+
+  .level__increase-list--new .level__increase-item {
+    height: 176px;
+    min-width: 376px;
+    padding: 16px 24px;
+    flex: 1 0 0;
+  }
+
+  .level__increase--tenders {
+    background: #F8FAFC;
+  }
+
+  .procurement-system {
+    padding: 64px 52px;
+  }
+
+  .procurement-system .container {
+    gap: 64px;
+  }
+
+  .procurement-system .container h2 {
+    font-size: 37px;
+    font-weight: 600;
+    line-height: 135%;
+    letter-spacing: -0.37px;
+  }
+
+  .procurement-system-left {
+    width: 476px;
+    height: 376px;
+    padding: 32px 64px;
+    flex: none;
+    justify-content: center;
+  }
+
+  .procurement-system-right {
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .procurement-system-main {
+    align-items: stretch;
+  }
+
+  .procurement-system-left h3 {
+    font-size: 24px;
+    letter-spacing: -0.24px;
+  }
+
+  .product-content-faq--tenders {
+    padding: 96px 52px;
+  }
+
+  .product-content-faq--tenders .container {
+    gap: 64px;
+  }
+
 }
 
 .btn--consultation {
