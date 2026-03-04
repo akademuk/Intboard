@@ -1460,4 +1460,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Order Page ---
+  function initOrderPage() {
+    const orderForm = document.getElementById('orderForm');
+    if (!orderForm) return;
+
+    // Утиліта: показати/приховати панелі за data-target радіо-кнопок
+    function setupTabSwitcher(radioSelector, panelSelector) {
+      const radios = orderForm.querySelectorAll(radioSelector);
+      if (!radios.length) return;
+
+      radios.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+          // Приховуємо всі панелі цієї групи
+          const allPanels = orderForm.querySelectorAll(panelSelector);
+          allPanels.forEach(function (panel) {
+            panel.hidden = true;
+            panel.setAttribute('aria-hidden', 'true');
+          });
+
+          // Показуємо обрану панель
+          var targetId = radio.getAttribute('data-target');
+          if (targetId) {
+            var targetPanel = document.getElementById(targetId);
+            if (targetPanel) {
+              targetPanel.hidden = false;
+              targetPanel.setAttribute('aria-hidden', 'false');
+            }
+          }
+
+          // Оновлюємо aria-selected на табах
+          radios.forEach(function (r) {
+            r.setAttribute('aria-selected', r === radio ? 'true' : 'false');
+          });
+        });
+      });
+    }
+
+    // 1. Перемикання способу доставки (Самовивіз / Нова Пошта)
+    // Секція «Із магазинів» та «Нова Пошта» — приховані за замовчуванням,
+    // з'являються при відповідному виборі в способі доставки
+    setupTabSwitcher(
+      '.order__delivery-tab-radio',
+      '.order__pickup, .order__nova-poshta'
+    );
+
+    // При зміні способу доставки — скидаємо вкладені вибори Нової Пошти
+    var deliveryRadios = orderForm.querySelectorAll('.order__delivery-tab-radio');
+    deliveryRadios.forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        // Якщо обрано не «Нова Пошта», скидаємо під-таби та ховаємо під-панелі
+        if (radio.value !== 'nova-poshta') {
+          var npRadios = orderForm.querySelectorAll('.order__np-tab-radio');
+          npRadios.forEach(function (r) {
+            r.checked = false;
+            r.setAttribute('aria-selected', 'false');
+          });
+          var npPanels = orderForm.querySelectorAll('.order__np-panel');
+          npPanels.forEach(function (p) {
+            p.hidden = true;
+            p.setAttribute('aria-hidden', 'true');
+          });
+        }
+      });
+    });
+
+    // 2. Перемикання типу доставки Нова Пошта (У відділення / У поштомат / Кур'єром)
+    // Кожний блок відповідає своїй радіо-кнопці і з'являється при
+    // відповідному виборі (у відділення/поштомат/кур'єром)
+    setupTabSwitcher(
+      '.order__np-tab-radio',
+      '.order__np-panel'
+    );
+
+    // 3. Видалення товару з кошика
+    var cartList = document.querySelector('.cart__list');
+    if (cartList) {
+      cartList.addEventListener('click', function (e) {
+        var removeBtn = e.target.closest('.cart__item-remove');
+        if (!removeBtn) return;
+
+        var cartItem = removeBtn.closest('.cart__item');
+        if (cartItem) {
+          cartItem.remove();
+        }
+      });
+    }
+  }
+
+  initOrderPage();
+
 });
